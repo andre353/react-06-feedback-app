@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 
 function Card({ children, reverse }) {
+  // Conditional css class
   // return (
   //     <div className={`card ${reverse && 'reverse'}`}>
   //         {children}
@@ -23,7 +24,7 @@ function Card({ children, reverse }) {
 }
 
 Card.defaultProps = {
-    reverse: true,
+    reverse: false,
 }
 
 Card.propTypes = {
