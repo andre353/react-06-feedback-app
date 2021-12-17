@@ -10,7 +10,8 @@ function App() {
     const [feedback, setFeedback] = useState(FeedbackData);
 
     const addFeedback = (newFeedback) => {
-        newFeedback.id = uuidv4(); // let's set a unique id to each newly generated feedback item
+        newFeedback.id = uuidv4();
+        // let's set a unique id to each newly generated feedback item
         // to update the state, we can't just push the new feedback item on it, as it is immutable
         // we need basically make a copy of it - we get the current objects that are already there via spread operator ... 
         // and on addition to those at the very beginnng of the array we put our new item=object
