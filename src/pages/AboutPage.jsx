@@ -7,6 +7,7 @@ function AboutPage() {
             <Card>
                 <NavLink to='/' className="nav-link" activeClassName='active'>Home</NavLink>
                 <NavLink to='/about' className="nav-link" activeClassName='active'>About</NavLink>
+                <NavLink to='/post' className="nav-link" activeClassName='active'>Post</NavLink>
             </Card>
             <Card>
                 <div className="about">

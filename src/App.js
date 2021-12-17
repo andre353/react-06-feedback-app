@@ -43,6 +43,7 @@ function App() {
                 <Card>
                     <NavLink to='/' className="nav-link" activeClassName='active'>Home</NavLink>
                     <NavLink to='/about' className="nav-link" activeClassName='active'>About</NavLink>
+                    <NavLink to='/post' className="nav-link" activeClassName='active'>Post</NavLink>
                 </Card>
                 <FeedbackForm handleAdd={addFeedback} />
                 <FeedbackStats feedback={feedback} />
@@ -55,7 +56,7 @@ function App() {
             }
           ></Route>
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/post" element={<Post />} />
+          <Route path="/post/*" element={<Post />} />
         </Routes>
       </div>
     </Router>
