@@ -1,32 +1,29 @@
 import { v4 as uuidv4 } from "uuid";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const FeedbackContext = createContext();
 
 // in order the components to get the context, they need to be wrapped in a Provider in App.js
 export const FeedbackProvider = ({ children }) => {
-  const [feedback, setFeedback] = useState([
-    {
-      id: 1,
-      text: "This is feedback item 1.",
-      rating: 10,
-    },
-    {
-      id: 2,
-      text: "This is feedback item 2.",
-      rating: 8,
-    },
-    {
-      id: 3,
-      text: "This is feedback item 3.",
-      rating: 9,
-    },
-  ]);
-
+  const [isLoading, setIsLoading] = useState(true)  
+  const [feedback, setFeedback] = useState([]);
   const [feedbackEdit, setFeedbackEdit] = useState({
       item: {},
       edit: false
   })
+
+  // we want the data to be fetched as soon as the pahe loads, to be used once that's why the 2-nd argument as a array of dependancies is empty
+  useEffect(() => {
+      fetchFeedback()
+  }, [])
+
+  // Fetch feedback
+  const fetchFeedback = async () => {
+      const response = await fetch(`http://localhost:5000/feedback?_sort=id&_order=desc`)
+      const data = await response.json()
+      setFeedback(data);
+      setIsLoading(false)
+  }
 
   const deleteFeedbackItem = (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
@@ -67,6 +64,7 @@ export const FeedbackProvider = ({ children }) => {
         feedback: feedback,
         // piece of state = data of the item clicked, we pass it to the FeedbackForm - shorthand:
         feedbackEdit,
+        isLoading,
         deleteFeedbackItem,
         addFeedback,
         // function to be called in in FeedbackItem when the item is clicked
