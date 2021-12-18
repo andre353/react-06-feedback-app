@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import Card from "./shared/Card";
 import RatingSelect from "./RatingSelect";
 import Button from "./shared/Button";
+import FeedbackContext from "../context/FeedbackContext";
 
-function FeedbackForm({handleAdd}) {
+function FeedbackForm() {  
   const [text, setText] = useState("");
   const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState("");
+  
+  const {addFeedback, feedbackEdit, updateFeedback} = useContext(FeedbackContext)
 
+  // any time a button FaEdit is clicked - a side effect will take place
+  useEffect(() => {
+    // check 
+    if(feedbackEdit.edit === true) {
+      setBtnDisabled(false); // we enable the button
+      setText(feedbackEdit.item.text); // item is the object, text is its property
+      setRating(feedbackEdit.item.rating); 
+    }
+  }, [feedbackEdit])
+  
   const handleTextChange = (e) => {
       if(text === '') {
         setBtnDisabled(true);
@@ -30,10 +43,17 @@ function FeedbackForm({handleAdd}) {
       const newFeedback = {
         // text (from db): text (from local State), it can be written as a shorthand just in one word - text, rating
         text: text,
-        rating: rating
+        rating: rating,
       }
-      handleAdd(newFeedback);
-    }
+
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback)
+      } else {
+        addFeedback(newFeedback)
+      }
+
+      setText('')
+    } 
   }
 
   return (
@@ -57,4 +77,4 @@ function FeedbackForm({handleAdd}) {
   );
 }
 
-export default FeedbackForm;
+export default FeedbackForm
