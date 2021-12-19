@@ -18,7 +18,8 @@ export const FeedbackProvider = ({ children }) => {
 
   // Fetch feedback
   const fetchFeedback = async () => {
-      const response = await fetch(`/feedback?_sort=id&_order=desc`)
+      const response = await fetch(`/feedback?sort=id&order=desc`)
+      // const response = await fetch(`/feedback?_sort=id&_order=desc`)
       // The json() method of the Response interface takes a Response stream and reads it to completion. It returns a promise which resolves with the result of parsing the body text as JSON.
       const data = await response.json()
       // assigning fetched data to feedback variable
